@@ -14,4 +14,4 @@ usersRouter.post("/", authMiddleware, usersController.create)
 usersRouter.patch("/:id", authMiddleware, usersController.update)
 usersRouter.delete("/:id", authMiddleware, usersController.delete)
 
-export { usersRouter, usersService }
+export { usersRouter, usersController, usersService }

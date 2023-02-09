@@ -4,6 +4,9 @@ dotenv.config()
 
 const uri = process.env.MONGODB_URI
 mongoose.set("strictQuery", false)
-const db = mongoose.connect(uri, { useNewUrlParser: true })
 
-export default db
+mongoose.connect(uri, { useNewUrlParser: true })
+
+mongoose.connection.on("error", (err) => {
+    console.log(err)
+})

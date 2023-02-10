@@ -9,8 +9,10 @@ async function authMiddleware(req, res, next) {
     const bearerToken = authHeader.split(" ")[1]
     try {
         const payload = await JWT.verify(bearerToken)
-        req.body.id = payload.id
+        req.body.userId = payload.sub
         req.body.email = payload.email
+        if (!req.body.userId || !req.body.email)
+            throw new Error("jwt malformed")
         return next()
     } catch (error) {
         return res

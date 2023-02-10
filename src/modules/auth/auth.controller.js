@@ -16,7 +16,7 @@ export class AuthController {
         if (await Password.compare(password, user.password)) {
             let { password, ...data } = user._doc
             data["token"] = await JWT.generateToken({
-                _id: user.id,
+                sub: user.id,
                 email: user.email,
             })
             return resp.json({ data: data })

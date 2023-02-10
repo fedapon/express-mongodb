@@ -4,13 +4,15 @@ export class MessageController {
     }
 
     find = async (req, resp) => {
-        const messages = await this.messagesService.find({})
+        const { userId: user } = req.body
+        const messages = await this.messagesService.find({ user })
         return resp.json({ data: messages })
     }
 
     findOne = async (req, resp) => {
-        const { id } = req.params
-        const message = await this.messagesService.findOne(id)
+        const { id: _id } = req.params
+        const { userId: user } = req.body
+        const message = await this.messagesService.findOne({ _id, user })
         return resp.json({ data: message })
     }
 
@@ -30,8 +32,12 @@ export class MessageController {
 
     update = async (req, resp) => {
         try {
-            const { id } = req.params
-            const message = await this.messagesService.update(id, req.body)
+            const { id: _id } = req.params
+            const { userId: user } = req.body
+            const message = await this.messagesService.update(
+                { _id, user },
+                req.body
+            )
             return resp.json({ data: message })
         } catch (err) {
             return resp.status(500).json({ message: err.message })
@@ -39,8 +45,9 @@ export class MessageController {
     }
 
     delete = async (req, resp) => {
-        const { id } = req.params
-        const response = await this.messagesService.delete(id)
+        const { id: _id } = req.params
+        const { userId: user } = req.body
+        const response = await this.messagesService.delete({ _id, user })
         return resp.json({ message: response })
     }
 }

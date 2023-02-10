@@ -7,8 +7,8 @@ export class MessageService {
         return this.repository.find(criteria)
     }
 
-    findOne = async (id) => {
-        return this.repository.findById(id)
+    findOne = async (criteria = {}) => {
+        return this.repository.findOne(criteria)
     }
 
     findOneByEmail = async (email) => {
@@ -20,11 +20,11 @@ export class MessageService {
         return model.save()
     }
 
-    update = async (id, dto) => {
-        return this.repository.findByIdAndUpdate(id, dto, { new: true })
+    update = async (criteria = {}, dto) => {
+        return this.repository.findOneAndUpdate(criteria, dto, { new: true })
     }
 
-    delete = async (id) => {
-        return this.repository.deleteOne({ _id: id })
+    delete = async (criteria = {}) => {
+        return this.repository.deleteOne(criteria)
     }
 }
